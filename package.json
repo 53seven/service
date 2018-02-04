@@ -13,7 +13,7 @@
   "author": "kiernan <kiernan@537.io> (http://537.io/)",
   "license": "MIT",
   "dependencies": {
-    "@537/config": "0.0.3",
+    "@537/config": "0.0.4",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "helmet": "^3.10.0",
