@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "NODE_ENV=test npm run lint && npm run cover",
+    "test": "NODE_ENV=test npm run lint && npm run cover && npm run check-coverage",
     "lint": "./node_modules/.bin/eslint app.js lib/ test/",
     "cover": "NODE_ENV=test ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --recursive test",
-    "view-coverage": "open ./coverage/lcov-report/index.html"
+    "view-coverage": "open ./coverage/lcov-report/index.html",
+    "check-coverage": "./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
   },
   "author": "kiernan <kiernan@537.io> (http://537.io/)",
   "license": "MIT",
