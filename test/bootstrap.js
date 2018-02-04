@@ -16,7 +16,6 @@ before((done) => {
 
 after((done) => {
   app.close(() => {
-    console.log('killed the server');
     done();
   });
 });
