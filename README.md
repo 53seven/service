@@ -1,6 +1,8 @@
 @537/service
 ===
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/53seven/service.svg)](https://greenkeeper.io/)
+
 [![build status](https://travis-ci.org/53seven/service.svg)](https://travis-ci.org/53seven/service)
 
 
