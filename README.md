@@ -1,6 +1,10 @@
 @537/service
 ===
 
+[![build status](https://travis-ci.org/53seven/service.svg)](https://travis-ci.org/53seven/service)
+
+
+
 A 'set and forget' opinionated implementation of express. Useful for stateless apis.
 
 ```
