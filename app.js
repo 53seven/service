@@ -8,7 +8,7 @@ const herodotus = require('herodotus');
 
 let logger;
 
-function bootstrap(package, routes = {}) {
+function bootstrap(package, opts = {}) {
   logger = herodotus(package);
 
   const requestLogger = hdtRequest({
@@ -19,9 +19,12 @@ function bootstrap(package, routes = {}) {
   const app = express();
 
   app.use(helmet());
-  // view engine setup
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'pug');
+
+  if (opts.view_path) {
+    // view engine setup
+    app.set('views', opts.view_path);
+    app.set('view engine', 'pug');
+  }
 
   // uncomment after placing your favicon in /public
   app.use(requestLogger);
@@ -30,9 +33,15 @@ function bootstrap(package, routes = {}) {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
 
-  Object.keys(routes).forEach((path) => {
-    app.use(path, routes[path]);
-  });
+  if (opts.passport) {
+    app.use(opts.passport.initialize());
+  }
+
+  if (opts.routes) {
+    Object.keys(opts.routes).forEach((path) => {
+      app.use(path, opts.routes[path]);
+    });
+  }
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
@@ -76,7 +85,7 @@ function start(app) {
 }
 module.exports.start = start;
 
-module.exports.run = (package, routes) => {
-  let app = bootstrap(package, routes);
+module.exports.run = (package, opts) => {
+  let app = bootstrap(package, opts);
   return start(app);
 };
