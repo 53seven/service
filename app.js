@@ -78,11 +78,7 @@ function start(app) {
   app.set('port', port);
 
   server.listen(port);
-  /* istanbul ignore next */
-  server.on('error', (err) => {
-    logger.error({err}, 'failed to start');
-    process.exit(1);
-  });
+
   server.on('listening', () => {
     logger.info({port}, 'started');
   });
@@ -96,7 +92,7 @@ module.exports.run = async (package, opts) => {
   let server = start(app);
   let out = new Promise((pass, fail) => {
     server.on('error', (err) => {
-      fail();
+      fail(err);
     });
     server.on('listening', () => {
       pass(server);
