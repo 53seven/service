@@ -39,7 +39,13 @@ function bootstrap(package, opts = {}) {
 
   if (opts.routes) {
     Object.keys(opts.routes).forEach((path) => {
-      app.use(path, opts.routes[path]);
+      if (Array.isArray(opts.routes[path])) {
+        opts.routes[path].forEach((r) => {
+          app.use(path, r);
+        });
+      } else {
+        app.use(path, opts.routes[path]);
+      }
     });
   }
 
@@ -85,7 +91,16 @@ function start(app) {
 }
 module.exports.start = start;
 
-module.exports.run = (package, opts) => {
+module.exports.run = async (package, opts) => {
   let app = bootstrap(package, opts);
-  return start(app);
+  let server = start(app);
+  let out = new Promise((pass, fail) => {
+    server.on('error', (err) => {
+      fail();
+    });
+    server.on('listening', () => {
+      pass(server);
+    });
+  });
+  return out;
 };
