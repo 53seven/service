@@ -18,7 +18,8 @@ describe('service.complex', () => {
           return (req, res, next) => { next(); };
         }
       },
-      view_path: 'foo/bar'
+      view_path: 'foo/bar',
+      static: 'public/'
     });
     agent = request.agent(app);
   });

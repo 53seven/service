@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
@@ -31,7 +30,10 @@ function bootstrap(package, opts = {}) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
-  app.use(express.static(path.join(__dirname, 'public')));
+
+  if (opts.static) {
+    app.use(express.static(opts.static));
+  }
 
   if (opts.passport) {
     app.use(opts.passport.initialize());
