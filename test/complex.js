@@ -19,7 +19,7 @@ describe('service.complex', () => {
         }
       },
       view_path: 'foo/bar',
-      static: 'public/'
+      static: ['public/']
     });
     agent = request.agent(app);
   });

@@ -32,7 +32,9 @@ function bootstrap(package, opts = {}) {
   app.use(cookieParser());
 
   if (opts.static) {
-    app.use(express.static(opts.static));
+    opts.static.forEach((static) => {
+      app.use(express.static(static));
+    });
   }
 
   if (opts.passport) {
