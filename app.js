@@ -3,17 +3,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const hdtRequest = require('herodotus-middleware');
-const herodotus = require('herodotus');
 
 let logger;
 
-function bootstrap(package, opts = {}) {
-  logger = herodotus(package);
-
-  const requestLogger = hdtRequest({
-    logger: logger,
-    headerName: 'x-request-id'
-  });
+function bootstrap(opts = {}) {
 
   const app = express();
 
@@ -25,8 +18,15 @@ function bootstrap(package, opts = {}) {
     app.set('view engine', 'pug');
   }
 
-  // uncomment after placing your favicon in /public
-  app.use(requestLogger);
+  if (opts.logger) {
+    logger = opts.logger;
+    const requestLogger = hdtRequest({
+      logger,
+      headerName: 'x-request-id'
+    });
+    app.use(requestLogger);
+  }
+
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
@@ -65,7 +65,7 @@ function bootstrap(package, opts = {}) {
   app.use(function(err, req, res, next) {
     // render the error page
     res.status(err.status || 500);
-    logger.error(err);
+    logger && logger.error(err);
     res.json({err});
   });
 
@@ -84,15 +84,15 @@ function start(app) {
   server.listen(port);
 
   server.on('listening', () => {
-    logger.info({port}, 'started');
+    logger && logger.info({port}, 'started');
   });
 
   return server;
 }
 module.exports.start = start;
 
-module.exports.run = async (package, opts) => {
-  let app = bootstrap(package, opts);
+module.exports.run = async (_module, opts) => {
+  let app = bootstrap(_module, opts);
   let server = start(app);
   let out = new Promise((pass, fail) => {
     server.on('error', (err) => {

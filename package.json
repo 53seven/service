@@ -17,13 +17,13 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "helmet": "^3.10.0",
-    "herodotus": "^2.7.4",
     "herodotus-middleware": "^0.3.0",
     "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.17.0",
+    "herodotus": "^3.0.1",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^5.0.0",
     "supertest": "^3.0.0"

@@ -1,6 +1,5 @@
 /* global describe, it, before, after */
 const request = require('supertest');
-const package = require('../package.json');
 const test_routes = require('./test_routes');
 const service = require('../app');
 
@@ -9,7 +8,7 @@ describe('service.basic', () => {
   let app, agent;
 
   before(async () => {
-    app = await service.run(package, {
+    app = await service.run({
       routes: {
         '/': test_routes
       }

@@ -1,7 +1,6 @@
 /* global describe, it, before, after */
 const request = require('supertest');
 const expect = require('chai').expect;
-const package = require('../package.json');
 const service = require('../app');
 
 describe('service.esoteric', () => {
@@ -9,7 +8,7 @@ describe('service.esoteric', () => {
     let app, agent;
 
     before(async () => {
-      app = await service.run(package);
+      app = await service.run();
       agent = request.agent(app);
     });
 
@@ -29,7 +28,7 @@ describe('service.esoteric', () => {
   describe('EADDRINUSE', () => {
     let app;
     before(async () => {
-      app = await service.run(package);
+      app = await service.run();
     });
 
     after((done) => {
@@ -41,7 +40,7 @@ describe('service.esoteric', () => {
     let err;
     it('should throw an error if address is already in use', async () => {
       try {
-        await service.run(package);
+        await service.run();
       } catch(_err) {
         err = _err;
       }

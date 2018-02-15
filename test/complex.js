@@ -1,15 +1,16 @@
 /* global describe, it, before, after */
 const request = require('supertest');
-const package = require('../package.json');
 const test_routes = require('./test_routes');
 const service = require('../app');
+const herodotus = require('herodotus');
 
 describe('service.complex', () => {
 
   let app, agent;
 
   before(async () => {
-    app = await service.run(package, {
+    let logger = herodotus();
+    app = await service.run({
       routes: {
         '/': [test_routes]
       },
@@ -19,7 +20,8 @@ describe('service.complex', () => {
         }
       },
       view_path: 'foo/bar',
-      static: ['public/']
+      static: ['public/'],
+      logger
     });
     agent = request.agent(app);
   });
