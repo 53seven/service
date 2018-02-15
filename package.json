@@ -17,7 +17,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "helmet": "^3.10.0",
-    "herodotus": "^2.7.4",
+    "herodotus": "^3.0.1",
     "herodotus-middleware": "^0.3.0",
     "pug": "^2.0.0-rc.4"
   },
