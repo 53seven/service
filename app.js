@@ -91,8 +91,8 @@ function start(app) {
 }
 module.exports.start = start;
 
-module.exports.run = async (_module, opts) => {
-  let app = bootstrap(_module, opts);
+module.exports.run = async (opts) => {
+  let app = bootstrap(opts);
   let server = start(app);
   let out = new Promise((pass, fail) => {
     server.on('error', (err) => {
