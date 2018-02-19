@@ -1,7 +1,7 @@
 /* global describe, it, before, after */
 const request = require('supertest');
 const expect = require('chai').expect;
-const service = require('../app');
+const service = require('../service');
 
 describe('service.esoteric', () => {
   describe('no_routes', () => {

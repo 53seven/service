@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {require_auth} = require('../app');
+const {require_auth} = require('../service');
 
 router.get('/test', (req, res) => {
   res.json({foo: 'bar'});

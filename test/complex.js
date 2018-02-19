@@ -1,7 +1,7 @@
 /* global describe, it, before, after */
 const request = require('supertest');
 const test_routes = require('./test_routes');
-const service = require('../app');
+const service = require('../service');
 const herodotus = require('herodotus');
 
 const id = 'this_is_an_alnum_id_1234567890';
