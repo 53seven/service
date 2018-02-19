@@ -2,7 +2,7 @@
 const request = require('supertest');
 const test_routes = require('./test_routes');
 const service = require('../app');
-
+console.log('basic loaded');
 describe('service.basic', () => {
 
   let app, agent;

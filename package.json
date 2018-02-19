@@ -2,10 +2,10 @@
   "name": "@537/service",
   "version": "0.1.0",
   "description": "",
-  "main": "app.js",
+  "main": "service.js",
   "scripts": {
     "test": "NODE_ENV=test npm run lint && npm run cover && npm run check-coverage",
-    "lint": "./node_modules/.bin/eslint app.js lib/ test/",
+    "lint": "./node_modules/.bin/eslint service.js lib/ test/",
     "cover": "NODE_ENV=test ./node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --recursive test",
     "view-coverage": "open ./coverage/lcov-report/index.html",
     "check-coverage": "./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
@@ -18,9 +18,12 @@
     "express": "^4.16.2",
     "helmet": "^3.10.0",
     "herodotus-middleware": "^0.3.0",
+    "passport": "^0.4.0",
+    "passport-localapikey-update": "^0.6.0",
     "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
+    "aws-sdk-mock": "^1.7.0",
     "chai": "^4.1.2",
     "eslint": "^4.17.0",
     "herodotus": "^3.0.1",

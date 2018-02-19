@@ -2,7 +2,13 @@
 const express = require('express');
 const router = express.Router();
 
+const {require_auth} = require('../app');
+
 router.get('/test', (req, res) => {
+  res.json({foo: 'bar'});
+});
+
+router.get('/needs_auth', require_auth, (req, res) => {
   res.json({foo: 'bar'});
 });
 

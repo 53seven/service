@@ -4,6 +4,8 @@ const test_routes = require('./test_routes');
 const service = require('../app');
 const herodotus = require('herodotus');
 
+const id = 'this_is_an_alnum_id_1234567890';
+
 describe('service.complex', () => {
 
   let app, agent;
@@ -14,11 +16,7 @@ describe('service.complex', () => {
       routes: {
         '/': [test_routes]
       },
-      passport: {
-        initialize: () => {
-          return (req, res, next) => { next(); };
-        }
-      },
+      auth: true,
       view_path: 'foo/bar',
       static: ['public/'],
       logger
@@ -35,6 +33,14 @@ describe('service.complex', () => {
   describe('GET', () => {
     it('should GET routes', () => {
       return agent.get('/test').expect(200);
+    });
+
+    it('should 200 if valid auth token provided', () => {
+      return agent.get(`/needs_auth?apikey=${id}`).expect(200);
+    });
+
+    it('should 401 if invalid auth token provided', () => {
+      return agent.get('/needs_auth?apikey=not_a_token').expect(401);
     });
   });
 

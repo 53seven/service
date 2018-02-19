@@ -2,12 +2,14 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const passport = require('passport');
+const LocalAPIKeyStrategy = require('passport-localapikey-update').Strategy;
 const hdtRequest = require('herodotus-middleware');
+const {get_token} = require('./util');
 
 let logger;
 
-function bootstrap(opts = {}) {
-
+let bootstrap = (opts = {}) => {
   const app = express();
 
   app.use(helmet());
@@ -37,8 +39,9 @@ function bootstrap(opts = {}) {
     });
   }
 
-  if (opts.passport) {
-    app.use(opts.passport.initialize());
+  if (opts.auth === true) {
+    app.use(passport.initialize());
+    passport.use(new LocalAPIKeyStrategy(get_token));
   }
 
   if (opts.routes) {
@@ -70,11 +73,9 @@ function bootstrap(opts = {}) {
   });
 
   return app;
-}
-module.exports.bootstrap = bootstrap;
+};
 
-
-function start(app) {
+let start = (app) => {
   const http = require('http');
   let server = http.createServer(app);
 
@@ -88,10 +89,26 @@ function start(app) {
   });
 
   return server;
-}
-module.exports.start = start;
+};
 
-module.exports.run = async (opts) => {
+let require_auth = (req, res, next) => {
+  passport.authenticate('localapikey', (err, user) => {
+    /* istanbul ignore if */
+    if (err) {
+      return next(err);
+    } else if (!user) {
+      let err = new Error('unauthorized');
+      err.status = 401;
+      return next(err);
+    } else {
+      req.user = user;
+      return next();
+    }
+  })(req, res, next);
+};
+
+
+let run = async (opts) => {
   let app = bootstrap(opts);
   let server = start(app);
   let out = new Promise((pass, fail) => {
@@ -103,4 +120,11 @@ module.exports.run = async (opts) => {
     });
   });
   return out;
+};
+
+module.exports = {
+  bootstrap,
+  start,
+  run,
+  require_auth
 };
