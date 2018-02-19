@@ -126,5 +126,6 @@ module.exports = {
   bootstrap,
   start,
   run,
-  require_auth
+  require_auth,
+  passport
 };
