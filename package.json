@@ -16,7 +16,7 @@
     "@537/config": "0.0.4",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "helmet": "^3.10.0",
+    "helmet": "^3.21.2",
     "herodotus-middleware": "^0.3.0",
     "passport": "^0.4.0",
     "passport-localapikey-update": "^0.6.0",
