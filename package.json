@@ -23,7 +23,7 @@
     "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
-    "aws-sdk-mock": "^1.7.0",
+    "aws-sdk-mock": "^5.1.0",
     "chai": "^4.1.2",
     "eslint": "^4.17.0",
     "herodotus": "^3.0.1",
